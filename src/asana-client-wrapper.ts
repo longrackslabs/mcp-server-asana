@@ -8,6 +8,8 @@ export class AsanaClientWrapper {
   private projectStatuses: any;
   private tags: any;
   private customFieldSettings: any;
+  private userTaskLists: any;
+  private users: any;
 
   constructor(token: string) {
     const client = Asana.ApiClient.instance;
@@ -21,10 +23,26 @@ export class AsanaClientWrapper {
     this.projectStatuses = new Asana.ProjectStatusesApi();
     this.tags = new Asana.TagsApi();
     this.customFieldSettings = new Asana.CustomFieldSettingsApi();
+    this.userTaskLists = new Asana.UserTaskListsApi();
+    this.users = new Asana.UsersApi();
   }
 
   async listWorkspaces(opts: any = {}) {
     const response = await this.workspaces.getWorkspaces(opts);
+    return response.data;
+  }
+
+  async getMyTasks(workspace: string, opts: any = {}) {
+    // Get the user task list for the authenticated user
+    const userTaskListResponse = await this.userTaskLists.getUserTaskListForUser('me', workspace);
+    const userTaskListGid = userTaskListResponse.data.gid;
+
+    // Get tasks from the user task list
+    const taskOpts: any = {};
+    if (opts.completed_since) taskOpts.completed_since = opts.completed_since;
+    if (opts.opt_fields) taskOpts.opt_fields = opts.opt_fields;
+
+    const response = await this.tasks.getTasksForUserTaskList(userTaskListGid, taskOpts);
     return response.data;
   }
 

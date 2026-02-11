@@ -17,6 +17,7 @@ import {
   deleteProjectStatusTool
 } from './tools/project-status-tools.js';
 import {
+  getMyTasksTool,
   searchTasksTool,
   getTaskTool,
   createTaskTool,
@@ -53,6 +54,7 @@ import {
 const all_tools: Tool[] = [
   listWorkspacesTool,
   searchProjectsTool,
+  getMyTasksTool,
   searchTasksTool,
   getTaskTool,
   createTaskTool,
@@ -91,6 +93,7 @@ const all_tools: Tool[] = [
 const READ_ONLY_TOOLS = [
   'asana_list_workspaces',
   'asana_search_projects',
+  'asana_get_my_tasks',
   'asana_search_tasks',
   'asana_get_task',
   'asana_get_task_stories',
@@ -145,6 +148,14 @@ export function tool_handler(asanaClient: AsanaClientWrapper): (request: CallToo
             archived,
             opts
           );
+          return {
+            content: [{ type: "text", text: JSON.stringify(response) }],
+          };
+        }
+
+        case "asana_get_my_tasks": {
+          const { workspace, ...opts } = args;
+          const response = await asanaClient.getMyTasks(workspace, opts);
           return {
             content: [{ type: "text", text: JSON.stringify(response) }],
           };
