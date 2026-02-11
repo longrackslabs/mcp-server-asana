@@ -312,7 +312,16 @@ Another example:
         * task_id (string): The task ID to delete
     * Returns: Success message confirming the task was deleted
     * Notes: This action cannot be undone. The task will be permanently removed.
-33. `asana_create_project`
+33. `asana_move_task_to_section`
+    * Move a task to a specific section within a project (e.g. move from 'To do' to 'Doing')
+    * Required input:
+        * task_id (string): The task ID to move
+        * section_id (string): The destination section ID
+    * Optional input:
+        * insert_after (string): A task ID to insert after within the section
+        * insert_before (string): A task ID to insert before within the section
+    * Returns: Success confirmation
+34. `asana_create_project`
     * Create a new project in a workspace or team
     * Required input:
         * workspace (string): The workspace GID to create the project in
