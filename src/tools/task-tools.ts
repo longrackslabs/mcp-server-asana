@@ -514,3 +514,30 @@ export const deleteTaskTool: Tool = {
   }
 };
 
+export const moveTaskToSectionTool: Tool = {
+  name: "asana_move_task_to_section",
+  description: "Move a task to a specific section within a project (e.g. move from 'To do' to 'Doing')",
+  inputSchema: {
+    type: "object",
+    properties: {
+      task_id: {
+        type: "string",
+        description: "The task ID to move"
+      },
+      section_id: {
+        type: "string",
+        description: "The destination section ID"
+      },
+      insert_after: {
+        type: "string",
+        description: "Optional: A task ID to insert after within the section"
+      },
+      insert_before: {
+        type: "string",
+        description: "Optional: A task ID to insert before within the section"
+      }
+    },
+    required: ["task_id", "section_id"]
+  }
+};
+

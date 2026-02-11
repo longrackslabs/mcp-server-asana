@@ -25,7 +25,8 @@ import {
   getMultipleTasksByGidTool,
   addProjectToTaskTool,
   removeProjectFromTaskTool,
-  deleteTaskTool
+  deleteTaskTool,
+  moveTaskToSectionTool
 } from './tools/task-tools.js';
 import {
   getTagTool,
@@ -83,6 +84,7 @@ const all_tools: Tool[] = [
   addProjectToTaskTool,
   removeProjectFromTaskTool,
   deleteTaskTool,
+  moveTaskToSectionTool,
 ];
 
 // List of tools that only read Asana state
@@ -557,6 +559,19 @@ export function tool_handler(asanaClient: AsanaClientWrapper): (request: CallToo
           const { task_id } = args;
           await asanaClient.deleteTask(task_id);
           const message = `Successfully deleted task ${task_id}`;
+          return {
+            content: [{ type: "text", text: message }],
+          };
+        }
+
+        case "asana_move_task_to_section": {
+          const { task_id, section_id, insert_after, insert_before } = args;
+          const data: any = {};
+          if (insert_after) data.insert_after = insert_after;
+          if (insert_before) data.insert_before = insert_before;
+
+          await asanaClient.moveTaskToSection(task_id, section_id, data);
+          const message = `Successfully moved task ${task_id} to section ${section_id}`;
           return {
             content: [{ type: "text", text: message }],
           };

@@ -420,6 +420,25 @@ export class AsanaClientWrapper {
     return response.data;
   }
 
+  async moveTaskToSection(taskId: string, sectionId: string, data: any = {}) {
+    const body: any = {
+      data: {
+        task: taskId
+      }
+    };
+
+    if (data.insert_after) {
+      body.data.insert_after = data.insert_after;
+    }
+    if (data.insert_before) {
+      body.data.insert_before = data.insert_before;
+    }
+
+    const sections = new Asana.SectionsApi();
+    const response = await sections.addTaskForSection(sectionId, { body });
+    return response;
+  }
+
   async removeProjectFromTask(taskId: string, projectId: string) {
     const body = {
       data: {
