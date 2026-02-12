@@ -560,7 +560,10 @@ export const moveTaskToSectionTool: Tool = {
         description: "Optional: A task ID to insert before within the section"
       }
     },
-    required: ["task_id", "section_id"]
+    required: ["task_id", "section_id"],
+    not: {
+      required: ["insert_after", "insert_before"]
+    }
   }
 };
 

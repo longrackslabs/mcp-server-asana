@@ -9,7 +9,6 @@ export class AsanaClientWrapper {
   private tags: any;
   private customFieldSettings: any;
   private userTaskLists: any;
-  private users: any;
 
   constructor(token: string) {
     const client = Asana.ApiClient.instance;
@@ -24,7 +23,6 @@ export class AsanaClientWrapper {
     this.tags = new Asana.TagsApi();
     this.customFieldSettings = new Asana.CustomFieldSettingsApi();
     this.userTaskLists = new Asana.UserTaskListsApi();
-    this.users = new Asana.UsersApi();
   }
 
   async listWorkspaces(opts: any = {}) {

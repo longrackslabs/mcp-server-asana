@@ -577,6 +577,9 @@ export function tool_handler(asanaClient: AsanaClientWrapper): (request: CallToo
 
         case "asana_move_task_to_section": {
           const { task_id, section_id, insert_after, insert_before } = args;
+          if (insert_after && insert_before) {
+            throw new Error("Cannot specify both insert_after and insert_before. Please provide only one positioning option.");
+          }
           const data: any = {};
           if (insert_after) data.insert_after = insert_after;
           if (insert_before) data.insert_before = insert_before;

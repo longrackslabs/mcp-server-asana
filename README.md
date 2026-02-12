@@ -321,7 +321,16 @@ Another example:
         * insert_after (string): A task ID to insert after within the section
         * insert_before (string): A task ID to insert before within the section
     * Returns: Success confirmation
-34. `asana_create_project`
+    * Notes: Only one of insert_after or insert_before may be specified.
+34. `asana_get_my_tasks`
+    * Get tasks from the authenticated user's 'My Tasks' list in a workspace
+    * Required input:
+        * workspace (string): The workspace GID to get My Tasks from
+    * Optional input:
+        * opt_fields (string): Comma-separated list of optional fields to include
+        * completed_since (string): Only return tasks completed since this time (ISO 8601). Use 'now' to only return incomplete tasks.
+    * Returns: List of tasks from the user's My Tasks list
+35. `asana_create_project`
     * Create a new project in a workspace or team
     * Required input:
         * workspace (string): The workspace GID to create the project in
